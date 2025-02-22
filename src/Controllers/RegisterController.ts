@@ -6,6 +6,12 @@ const RegisterController = () => {
 
     const router = express.Router();
 
+    // Endpoint para registrar usuario
+    router.post('/', async (req: Request, res: Response) => {
+        
+    });
+
+    // Endpoint para enviar email al registrarse
     router.post('/send-email', async (req: Request, res: Response) => {
         try {
             const { to, subject, html } = req.body;
@@ -15,7 +21,7 @@ const RegisterController = () => {
                 return;
             }
 
-            // Send email via Resend API using fetch
+            // Send email via Resend API
         const response = await fetch(process.env.RESEND_API_URL as string, {
             method: 'POST',
             headers: {
