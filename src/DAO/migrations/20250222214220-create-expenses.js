@@ -28,6 +28,17 @@ module.exports = {
         type: Sequelize.INTEGER
       }
     });
+
+    await queryInterface.addConstraint('Expenses', {
+      name: "FK_EXPENSES_CATEGORY",
+      type: "FOREIGN KEY",
+      fields: ["category_id"],
+      references: {
+        table: "Categories",
+        field: "id"
+      },
+    });
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Expenses');
