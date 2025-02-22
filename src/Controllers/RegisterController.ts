@@ -8,7 +8,20 @@ const RegisterController = () => {
 
     // Endpoint para registrar usuario
     router.post('/', async (req: Request, res: Response) => {
-        
+        const nuevoUsuario = req.body;
+
+        const usuarioCreado = await db.Users.create({
+            id: null,
+            name: nuevoUsuario.nombre,
+            email: nuevoUsuario.email,
+            password_hash: nuevoUsuario.password,
+            role_id: 0
+        });
+
+        res.json({
+            msg: "",
+            usuario: usuarioCreado
+        })
     });
 
     // Endpoint para enviar email al registrarse

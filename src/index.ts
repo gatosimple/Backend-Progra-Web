@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import RegisterController from "./Controllers/RegisterController";
+import LoginController from "./Controllers/LoginController";
 
 dotenv.config()
 
@@ -17,8 +18,10 @@ app.use(cors()) // TODO: Incrementar la seguridad
 const port = process.env.PORT || 3000;
 
 const [ registerPath, registerRouter ] = RegisterController();
+const [ loginPath, loginRouter ] = LoginController();
 
 app.use(registerPath as string, registerRouter as Router);
+app.use(loginPath as string, loginRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
