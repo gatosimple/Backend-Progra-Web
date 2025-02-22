@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Usuario.hasMany(models.PasswordReset, {
-        foreignKey: "user_id",
+        foreignKey: "usuarioId",
         as: "PasswordReset"
       });
 
