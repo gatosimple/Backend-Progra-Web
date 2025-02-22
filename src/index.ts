@@ -5,6 +5,7 @@ import cors from "cors";
 import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
 import UsuarioController from "./Controllers/UsuarioController";
+import AddGastoController from "./Controllers/AddGastoController";
 
 dotenv.config()
 
@@ -21,7 +22,7 @@ const port = process.env.PORT || 3000;
 const [ registerPath, registerRouter ] = RegisterController();
 const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
-
+const [ addGastoPath, addGastoRouter ] = AddGastoController();
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
