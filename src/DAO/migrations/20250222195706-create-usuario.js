@@ -19,7 +19,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       role_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Role",  // Referencia a la tabla Role
+          key: "id"
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+
       }
     });
   },
