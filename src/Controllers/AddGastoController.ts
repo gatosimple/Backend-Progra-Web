@@ -15,6 +15,26 @@ const AddGastoController = () => {
         }) 
     });
 
+    // Endpoint para enviar gastos
+    router.post('/', async (req: Request, res: Response) => {
+        const nuevoGasto = req.body;
+
+        const gastoCreado = await db.Expenses.create({
+            id: null,
+            user_id: nuevoGasto.user_id,
+            date: nuevoGasto.date,
+            amount: nuevoGasto.amount,
+            description: nuevoGasto.description,
+            recurring: nuevoGasto.recurring,
+            category_id: nuevoGasto.category_id
+        });
+
+        res.json({
+            msg: "",
+            gasto: gastoCreado
+        })
+    });
+
     return [ path, router ];
 }
 
