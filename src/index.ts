@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
+import AddGastoController from "./Controllers/AddGastoController";
 
 dotenv.config()
 
@@ -19,9 +20,11 @@ const port = process.env.PORT || 3000;
 
 const [ registerPath, registerRouter ] = RegisterController();
 const [ loginPath, loginRouter ] = LoginController();
+const [ addGastoPath, addGastoRouter ] = AddGastoController();
 
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
+app.use(addGastoPath as string, addGastoRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
