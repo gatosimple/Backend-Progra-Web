@@ -11,7 +11,7 @@ const LoginController = () => {
         const email = req.body.email
         const password = req.body.password
 
-        const usuarios = await db.Users.findAll({
+        const usuarios = await db.Usuario.findAll({
             where: {
                 email: email,
                 password_hash: password
