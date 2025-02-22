@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "gatosimple",
-    "password": "gatosimple",
-    "database": "gatosimple_db",
+    "username": "pw-2025-0",
+    "password": "pw-2025-0",
+    "database": "pw-2025-0_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
