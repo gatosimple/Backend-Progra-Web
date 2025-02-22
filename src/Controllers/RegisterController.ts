@@ -10,12 +10,12 @@ const RegisterController = () => {
     router.post('/', async (req: Request, res: Response) => {
         const nuevoUsuario = req.body;
 
-        const usuarioCreado = await db.Users.create({
+        const usuarioCreado = await db.Usuario.create({
             id: null,
-            name: nuevoUsuario.nombre,
+            name: nuevoUsuario.name,
             email: nuevoUsuario.email,
             password_hash: nuevoUsuario.password,
-            role_id: 0
+            role_id: 2
         });
 
         res.json({

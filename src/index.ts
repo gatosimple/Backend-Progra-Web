@@ -23,9 +23,11 @@ const [ registerPath, registerRouter ] = RegisterController();
 const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
 const [ addGastoPath, addGastoRouter ] = AddGastoController();
+
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
+app.use(addGastoPath as string, addGastoRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
