@@ -6,6 +6,7 @@ import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
 import UsuarioController from "./Controllers/UsuarioController";
 import AddGastoController from "./Controllers/AddGastoController";
+import ResetPasswordController from "./Controllers/ResetPasswordController";
 
 dotenv.config()
 
@@ -23,11 +24,14 @@ const [ registerPath, registerRouter ] = RegisterController();
 const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
 const [ addGastoPath, addGastoRouter ] = AddGastoController();
+const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
+
 
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
 app.use(addGastoPath as string, addGastoRouter as Router);
+app.use(resetPasswordPath as string, resetPasswordRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
