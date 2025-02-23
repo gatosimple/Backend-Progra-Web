@@ -15,9 +15,18 @@ const LoginController = () => {
 
         const { email, password } = req.body;
 
-        const user = await db.Usuario.findOne({email});
+        const user = await db.Usuario.findOne({
+            where: { email: email }
+        });
 
-        const passwordCorrect = user === null ? false : bcrypt.compare(password, user.password_hash);
+        if (!user) {
+            res.json({
+                msg: "Error en login"
+            });
+            return;
+        }
+
+        const passwordCorrect = user === null ? false : await bcrypt.compare(password, user.password_hash);
 
         const userForToken = {
             id: user.id,
@@ -26,7 +35,7 @@ const LoginController = () => {
 
         const token = jwt.sign(userForToken, process.env.SECRET as string);
 
-        if ((user && passwordCorrect)) {
+        if (passwordCorrect) {
             res.json({
                 msg: "",
                 body: {
