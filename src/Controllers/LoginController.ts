@@ -1,5 +1,7 @@
 import express, {Request, Response} from "express"
 const db = require("../DAO/models")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const LoginController = () => {
     const path: string = "/login";
@@ -8,25 +10,53 @@ const LoginController = () => {
 
     // Endpoint para verificar usuario
     router.post('/', async (req: Request, res: Response) => {
-        const email = req.body.email
-        const password = req.body.password
+        // const email = req.body.email
+        // const password = req.body.password
 
-        const usuarios = await db.Usuario.findAll({
-            where: {
-                email: email,
-                password_hash: password
-            }
-        });
+        const { email, password } = req.body;
 
-        if (usuarios.length > 0) {
+        const user = await db.Usuario.findOne({email});
+
+        const passwordCorrect = user === null ? false : bcrypt.compare(password, user.password_hash);
+
+        const userForToken = {
+            id: user.id,
+            email: user.email
+        }
+
+        const token = jwt.sign(userForToken, process.env.SECRET as string);
+
+        if ((user && passwordCorrect)) {
             res.json({
-                msg: ""
+                msg: "",
+                body: {
+                    token,
+                    email: user.email,
+                    name: user.name
+                }
             })
         } else {
             res.json({
                 msg: "Error en login"
             })
         }
+
+        // const usuarios = await db.Usuario.findAll({
+        //     where: {
+        //         email: email,
+        //         password_hash: passwordHash
+        //     }
+        // });
+
+        // if (usuarios.length > 0) {
+        //     res.json({
+        //         msg: ""
+        //     })
+        // } else {
+        //     res.json({
+        //         msg: "Error en login"
+        //     })
+        // }
     });
 
     return [ path, router ];
