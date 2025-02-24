@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'category_id',
         as: 'expenses'
       });
+
+      Categories.hasMany(models.Budgets, {
+        foreignKey: 'category_id',
+        as: 'budgets'
+      });
     }
   }
   Categories.init({

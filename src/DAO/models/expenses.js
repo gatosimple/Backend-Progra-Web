@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'category_id',
         as: 'category'
       });
+
+      Expenses.belongsTo(models.Usuario, {
+        foreignKey: 'user_id',
+        as: 'user'
+      });
     }
   }
   Expenses.init({

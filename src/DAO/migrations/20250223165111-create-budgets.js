@@ -30,6 +30,16 @@ module.exports = {
       },
     });
 
+    await queryInterface.addConstraint('Budgets', {
+      name: "FK_BUDGETS_USUARIO",
+      type: "FOREIGN KEY",
+      fields: ["user_id"],
+      references: {
+        table: "Usuario",
+        field: "id"
+      },
+    })
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Budgets');

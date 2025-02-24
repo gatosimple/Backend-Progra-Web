@@ -8,10 +8,10 @@ const PresupuestoController = () => {
 
     // Endpoint para obtener todos los presupuestos
     router.get('/', async (req: Request, resp: Response) => {
-        const presupuestos = await db.Budget.findAll({
+        const presupuestos = await db.Budgets.findAll({
             include : {
                 model : db.Usuario,
-                as : "Usuario",
+                as : "user",
                 attributes : ["name"],
                 required : true
             }
