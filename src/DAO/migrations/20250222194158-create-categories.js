@@ -14,6 +14,17 @@ module.exports = {
       }
     });
 
+    await queryInterface.addConstraint("Categories", {
+      name : "FK_BUDGETS_CATEGORIES",
+      type : "FOREIGN KEY",
+      fields : ["categoriaId"],
+      references : {
+        table : "Categories",
+        field : "id"
+      }
+    })
+
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Categories');
