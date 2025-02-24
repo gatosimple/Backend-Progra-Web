@@ -10,6 +10,7 @@ import PresupuestoController from "./Controllers/PresupuestoController";
 import ExpensesController from "./Controllers/ExpensesControllers";
 import ReportsController from "./Controllers/ReportsController";
 import CategoriaController from "./Controllers/CategoriaController";
+import ResetPasswordController from "./Controllers/ResetPasswordController";
 
 dotenv.config()
 
@@ -31,6 +32,8 @@ const [ PresupuestoPath, PresupuestoRouter ] = PresupuestoController();
 const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
+const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
+
 
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
@@ -40,6 +43,7 @@ app.use(PresupuestoPath as string, PresupuestoRouter as Router);
 app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
+app.use(resetPasswordPath as string, resetPasswordRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
