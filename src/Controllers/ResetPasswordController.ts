@@ -1,6 +1,8 @@
 import express, {Request, Response} from "express"
 const db = require("../DAO/models")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+
 
 const ResetPasswordController = () => {
     const path: string = "/reset-password";
@@ -27,6 +29,20 @@ const ResetPasswordController = () => {
                 { password_hash: newPasswordHash }, // Valores a actualizar
                 { where: { email } } // Condición para encontrar al usuario
               );
+
+            const tokenIncludes = {
+                id: userExists.id,
+                password: userExists.password_hash
+            }
+
+            const token = jwt.sign(tokenIncludes, process.env.SECRETCHANGEPASSWORD as string);
+
+            // Insertar una nueva fila en la tabla PasswordResets
+            await db.PasswordReset.create({
+                usuarioId: userExists.id, // Clave foránea
+                token: token,
+                created_at: new Date() // Establecer la fecha actual
+            });
 
         } else {
             res.json({
