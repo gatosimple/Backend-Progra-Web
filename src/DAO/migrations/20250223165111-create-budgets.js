@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Expenses', {
+    await queryInterface.createTable('Budgets', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,25 +12,16 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
-      date: {
-        type: Sequelize.DATEONLY
-      },
-      amount: {
+      monthly_budget: {
         type: Sequelize.FLOAT
-      },
-      description: {
-        type: Sequelize.STRING
-      },
-      recurring: {
-        type: Sequelize.BOOLEAN
       },
       category_id: {
         type: Sequelize.INTEGER
-      }
+      },
     });
 
-    await queryInterface.addConstraint('Expenses', {
-      name: "FK_EXPENSES_CATEGORY",
+    await queryInterface.addConstraint('Budgets', {
+      name: "FK_BUDGETS_CATEGORY",
       type: "FOREIGN KEY",
       fields: ["category_id"],
       references: {
@@ -39,8 +30,8 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('Expenses', {
-      name: "FK_EXPENSES_USUARIO",
+    await queryInterface.addConstraint('Budgets', {
+      name: "FK_BUDGETS_USUARIO",
       type: "FOREIGN KEY",
       fields: ["user_id"],
       references: {
@@ -51,6 +42,6 @@ module.exports = {
 
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Expenses');
+    await queryInterface.dropTable('Budgets');
   }
 };
