@@ -6,11 +6,11 @@ import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
 import UsuarioController from "./Controllers/UsuarioController";
 import AddGastoController from "./Controllers/AddGastoController";
-import PresupuestoController from "./Controllers/PresupuestoController";
+import BudgetsController from "./Controllers/BudgetsController";
 import ExpensesController from "./Controllers/ExpensesControllers";
 import ReportsController from "./Controllers/ReportsController";
 import CategoriaController from "./Controllers/CategoriaController";
-import ResetPasswordController from "./Controllers/ResetPasswordController";
+import AddPresupuestoController from "./Controllers/AddPresupuestoController";
 
 dotenv.config()
 
@@ -28,22 +28,21 @@ const [ registerPath, registerRouter ] = RegisterController();
 const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
 const [ addGastoPath, addGastoRouter ] = AddGastoController();
-const [ PresupuestoPath, PresupuestoRouter ] = PresupuestoController();
+const [ BudgetsPath, BudgetsRouter ] = BudgetsController();
 const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
-const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
-
+const [ addPresupuestoPath, addPresupuestoRouter ] = AddPresupuestoController();
 
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
 app.use(addGastoPath as string, addGastoRouter as Router);
-app.use(PresupuestoPath as string, PresupuestoRouter as Router);
+app.use(BudgetsPath as string, BudgetsRouter as Router);
 app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
-app.use(resetPasswordPath as string, resetPasswordRouter as Router);
+app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
