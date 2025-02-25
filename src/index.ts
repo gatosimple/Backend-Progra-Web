@@ -9,6 +9,8 @@ import AddGastoController from "./Controllers/AddGastoController";
 import BudgetsController from "./Controllers/BudgetsController";
 import AddPresupuestoController from "./Controllers/AddPresupuestoController";
 import RoleController from "./Controllers/RoleController";
+import RoleController from "./Controllers/RoleController";
+import PresupuestoController from "./Controllers/PresupuestoController";
 import ExpensesController from "./Controllers/ExpensesControllers";
 import ReportsController from "./Controllers/ReportsController";
 import CategoriaController from "./Controllers/CategoriaController";
