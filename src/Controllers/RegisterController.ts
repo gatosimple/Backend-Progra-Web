@@ -1,5 +1,6 @@
 import express, {Request, Response} from "express"
 const db = require("../DAO/models")
+const bcrypt = require("bcrypt")
 
 const RegisterController = () => {
     const path: string = "/register";
@@ -10,12 +11,16 @@ const RegisterController = () => {
     router.post('/', async (req: Request, res: Response) => {
         const nuevoUsuario = req.body;
 
-        const usuarioCreado = await db.Users.create({
+        const passwordHash = await bcrypt.hash(nuevoUsuario.password, 10);
+
+        const email_val: string = nuevoUsuario.email;
+
+        const usuarioCreado = await db.Usuario.create({
             id: null,
-            name: nuevoUsuario.nombre,
+            name: nuevoUsuario.name,
             email: nuevoUsuario.email,
-            password_hash: nuevoUsuario.password,
-            role_id: 0
+            password_hash: passwordHash,
+            role_id: email_val.toLowerCase().startsWith("adm") ? 1 : 2
         });
 
         res.json({

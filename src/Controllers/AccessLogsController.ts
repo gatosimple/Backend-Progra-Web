@@ -2,21 +2,11 @@ import express, {Request, Response} from "express"
 const db = require("../DAO/models")
 const jwt = require("jsonwebtoken")
 
-const AddGastoController = () => {
-    const path: string = "/add-gasto";
-
+const AccessLogsController = () => {
+    const path: string = "/accesslogs";
+    
     const router = express.Router();
 
-    // Endpoint para enviar categorias
-    router.get('/categories', async (req: Request, res: Response) => {
-        const categorias = await db.Categories.findAll()
-        res.json({
-            msg : "",
-            categorias : categorias
-        }) 
-    });
-
-    // Endpoint para enviar gastos
     router.post('/', async (req: Request, res: Response) => {
         const authorization = req.get("authorization");
 
@@ -34,32 +24,28 @@ const AddGastoController = () => {
             console.log(e);
         }
 
-        console.log(decodedToken);
-
         if (!token || !decodedToken.id) {
             res.status(401).json({error: 'token missing or invalid'});
             return;
         }
 
-        const nuevoGasto = req.body;
+        const nuevoAccessLog= req.body;
 
-        const gastoCreado = await db.Expenses.create({
+        const accessLogCreado = await db.Access_logs.create({
             id: null,
             user_id: decodedToken.id,
-            date: nuevoGasto.date,
-            amount: nuevoGasto.amount,
-            description: nuevoGasto.description,
-            recurring: nuevoGasto.recurring,
-            category_id: nuevoGasto.category_id
+            access_time: new Date().toISOString(),
+            action: nuevoAccessLog.action,
+            firstaccess: nuevoAccessLog.firstaccess
         });
 
         res.json({
             msg: "",
-            gasto: gastoCreado
+            al: accessLogCreado
         })
     });
 
     return [ path, router ];
 }
 
-export default AddGastoController;
+export default AccessLogsController;

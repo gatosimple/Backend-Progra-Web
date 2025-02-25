@@ -3,31 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Categories extends Model {
+  class Access_logs extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Categories.hasMany(models.Expenses, {
-        foreignKey: 'category_id',
-        as: 'expenses'
-      });
-
-      Categories.hasMany(models.Budgets, {
-        foreignKey: 'category_id',
-        as: 'budgets'
+      Access_logs.belongsTo(models.Usuario, {
+        foreignKey: 'user_id',
+        as: 'usuario'
       });
     }
   }
-  Categories.init({
-    name: DataTypes.STRING
+  Access_logs.init({
+    user_id: DataTypes.INTEGER,
+    access_time: DataTypes.DATE,
+    action: DataTypes.STRING,
+    firstaccess: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Categories',
+    modelName: 'Access_logs',
     freezeTableName: true,
     timestamps: false
   });
-  return Categories;
+  return Access_logs;
 };
