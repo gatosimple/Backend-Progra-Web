@@ -3,30 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class PasswordReset extends Model {
+  class Access_logs extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      PasswordReset.belongsTo(models.Usuario, {
-      foreignKey: "usuarioId",
-      as: "Usuario"
+      Access_logs.belongsTo(models.Usuario, {
+        foreignKey: 'user_id',
+        as: 'usuario'
       });
-
     }
   }
-  PasswordReset.init({
-    usuarioId: DataTypes.INTEGER,
-    token: DataTypes.STRING,
-    created_at: DataTypes.DATE
+  Access_logs.init({
+    user_id: DataTypes.INTEGER,
+    access_time: DataTypes.DATE,
+    action: DataTypes.STRING,
+    firstaccess: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'PasswordReset',
+    modelName: 'Access_logs',
     freezeTableName: true,
     timestamps: false
   });
-  return PasswordReset;
+  return Access_logs;
 };

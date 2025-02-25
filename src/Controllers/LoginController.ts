@@ -10,9 +10,6 @@ const LoginController = () => {
 
     // Endpoint para verificar usuario
     router.post('/', async (req: Request, res: Response) => {
-        // const email = req.body.email
-        // const password = req.body.password
-
         const { email, password } = req.body;
 
         const user = await db.Usuario.findOne({
@@ -30,7 +27,8 @@ const LoginController = () => {
 
         const userForToken = {
             id: user.id,
-            email: user.email
+            email: user.email,
+            role_id: user.role_id
         }
 
         const token = jwt.sign(userForToken, process.env.SECRET as string);
@@ -41,7 +39,8 @@ const LoginController = () => {
                 body: {
                     token,
                     email: user.email,
-                    name: user.name
+                    name: user.name,
+                    role_id: user.role_id
                 }
             })
         } else {

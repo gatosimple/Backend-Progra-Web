@@ -12,8 +12,8 @@ module.exports = {
       usuarioId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Usuario",  // Referencia a la tabla Users
-          key: "id"        // Referencia a la columna id de Users
+          model: "Usuario",
+          key: "id"
         },
         onDelete: "CASCADE",  // Opcional: elimina los registros si se borra el usuario
         onUpdate: "CASCADE"   // Opcional: actualiza user_id si cambia id en Users
