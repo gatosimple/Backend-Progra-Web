@@ -9,6 +9,8 @@ const AccessLogsController = () => {
 
     // 🚀 Ruta existente: Registrar un nuevo acceso
     router.post('/', async (req: Request, res: Response) => {
+        console.log("entro2")
+
         const authorization = req.get("authorization");
 
         let token = '';
@@ -34,7 +36,7 @@ const AccessLogsController = () => {
 
         const nuevoAccessLog= req.body;
 
-        const accessLogCreado = await db.access_logs.create({
+        const accessLogCreado = await db.Access_logs.create({
             id: null,
             user_id: decodedToken.id,
             // access_time: new Date(),
@@ -50,6 +52,7 @@ const AccessLogsController = () => {
 
     // ✅ NUEVA RUTA: Consultar historial de acceso
     router.get("/", async (req: Request, res: Response) => {
+        console.log("entro")
         try {
             const { userId, fechaInicio, fechaFin } = req.query;
 
@@ -65,10 +68,12 @@ const AccessLogsController = () => {
                 };
             }
 
-            const accessLogs = await db.access_logs.findAll({
+            const accessLogs = await db.Access_logs.findAll({
                 where: whereCondition,
                 order: [["access_time", "DESC"]],
             });
+
+            console.log(accessLogs);
 
             res.status(200).json(accessLogs);
         } catch (error) {
