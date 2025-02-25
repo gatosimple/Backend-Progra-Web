@@ -6,6 +6,9 @@ import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
 import UsuarioController from "./Controllers/UsuarioController";
 import AddGastoController from "./Controllers/AddGastoController";
+import BudgetsController from "./Controllers/BudgetsController";
+import AddPresupuestoController from "./Controllers/AddPresupuestoController";
+import RoleController from "./Controllers/RoleController";
 import RoleController from "./Controllers/RoleController";
 import PresupuestoController from "./Controllers/PresupuestoController";
 import ExpensesController from "./Controllers/ExpensesControllers";
@@ -34,10 +37,11 @@ const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
 const [ rolePath, roleRouter ] = RoleController();
 const [ addGastoPath, addGastoRouter ] = AddGastoController();
-const [ PresupuestoPath, PresupuestoRouter ] = PresupuestoController();
+const [ BudgetsPath, BudgetsRouter ] = BudgetsController();
 const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
+const [ addPresupuestoPath, addPresupuestoRouter ] = AddPresupuestoController();
 const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
 const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
 const [ accessLogPath, accessLogRouter ] = AccessLogsController();
@@ -49,10 +53,11 @@ app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
 app.use(rolePath as string, roleRouter as Router);
 app.use(addGastoPath as string, addGastoRouter as Router);
-app.use(PresupuestoPath as string, PresupuestoRouter as Router);
+app.use(BudgetsPath as string, BudgetsRouter as Router);
 app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
+app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 app.use(resetPasswordPath as string, resetPasswordRouter as Router);
 app.use(editExpensesPath as string, editExpensesRouter as Router)
 app.use(alertaPresupuestoPath as string, alertaPresupuestoRouter as Router)
