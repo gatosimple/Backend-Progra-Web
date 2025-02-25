@@ -35,7 +35,7 @@ const ResetPasswordController = () => {
                 password: userExists.password_hash
             }
 
-            const token = jwt.sign(tokenIncludes, process.env.SECRETCHANGEPASSWORD as string);
+            const token = jwt.sign(tokenIncludes, process.env.SECRET as string);
 
             // Insertar una nueva fila en la tabla PasswordResets
             await db.PasswordResets.create({
