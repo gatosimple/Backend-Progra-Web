@@ -47,6 +47,8 @@ module.exports = {
         table: "Usuario",
         field: "id"
       },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE"
     })
 
   },

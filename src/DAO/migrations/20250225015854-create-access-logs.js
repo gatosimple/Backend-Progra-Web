@@ -1,4 +1,7 @@
 'use strict';
+
+const { on } = require('events');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -32,6 +35,8 @@ module.exports = {
         table: "Usuario",
         field: "id"
       },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE"
     });
   },
   async down(queryInterface, Sequelize) {

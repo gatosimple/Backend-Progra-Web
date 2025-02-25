@@ -1,5 +1,6 @@
 import express, {Request, Response} from "express"
 const db = require("../DAO/models")
+const bcrypt = require("bcrypt")
 
 const UsuarioController = () => {
     const path: string = "/admin/users";
@@ -27,12 +28,13 @@ const UsuarioController = () => {
     // Endpoint para agregar un nuevo usuario
     router.post("/", async (req : Request, resp : Response) => {
         const nuevoUsuario = req.body
+        const passwordHash = await bcrypt.hash(nuevoUsuario.password_hash, 10)
 
         const usuarioCreado = await db.Usuario.create({
             id : null,
             name : nuevoUsuario.nombre,
             email : nuevoUsuario.email,
-            password_hash : nuevoUsuario.password_hash,
+            password_hash : passwordHash,
             role_id : nuevoUsuario.role_id
         })
 
@@ -60,7 +62,7 @@ const UsuarioController = () => {
     // Endpoint para filtrar usuarios por nombre
     router.get("/filter", async (req: Request, resp: Response) => {
         
-        const id = Number(req.query.role_id)
+        const id = req.query.role_id
         const usuarios = await db.Usuario.findAll({
             where : {
                 role_id : id
@@ -103,21 +105,30 @@ const UsuarioController = () => {
     router.put("/:id", async (req: Request, resp: Response) => {
         const id = req.params.id
         const datosActualizados = req.body
-        await db.Usuario.update({
-                name: datosActualizados.nombre,
-                email: datosActualizados.email,
-                password_hash: datosActualizados.password_hash,
-                role_id: datosActualizados.role_id
-            },
-            { where: { 
-                    id: id 
-                }
-            }
-        )
+        // 
+        let passwordHash: string | undefined;
+        
+        // Si se proporciona una nueva contraseña, la encripta y la agrega a la actualización
+        if (datosActualizados.password_hash) {
+            passwordHash = await bcrypt.hash(datosActualizados.password_hash, 10);
+        }
+
+        // 
+        const usuarioActualizado: any = {
+            name: datosActualizados.name,
+            email: datosActualizados.email,
+            role_id: datosActualizados.role_id,
+        };
+
+        // Si la contraseña se encriptó, la agregamos a la actualización
+        if (passwordHash) {
+            usuarioActualizado.password_hash = passwordHash;
+        }
+
+        // Actualizar usuario
+        await db.Usuario.update(usuarioActualizado, { where: { id: id } });
         resp.json({ msg: "" })
     })
-
-    
 
     return [ path, router ]
 }
