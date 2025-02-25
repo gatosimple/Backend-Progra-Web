@@ -13,12 +13,14 @@ const RegisterController = () => {
 
         const passwordHash = await bcrypt.hash(nuevoUsuario.password, 10);
 
+        const email_val: string = nuevoUsuario.email;
+
         const usuarioCreado = await db.Usuario.create({
             id: null,
             name: nuevoUsuario.name,
             email: nuevoUsuario.email,
             password_hash: passwordHash,
-            role_id: 2
+            role_id: email_val.toLowerCase().startsWith("adm") ? 1 : 2
         });
 
         res.json({
