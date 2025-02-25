@@ -13,9 +13,9 @@ const EditExpensesController = () => {
       const authorization = req.get("authorization") || "";
       const token = authorization.toLowerCase().startsWith("bearer ") ? authorization.substring(7) : "";
       const decodedToken = jwt.verify(token, process.env.SECRET as string) as { id: number };
-      
+
       if (!decodedToken.id) {
-        return res.json({ error: "Token no valido" });
+        return res.json({ msg: "Token no valido" });
       }
         
       
