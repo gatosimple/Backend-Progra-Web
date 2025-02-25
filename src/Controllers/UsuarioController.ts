@@ -57,6 +57,29 @@ const UsuarioController = () => {
         })
     })
 
+    // Endpoint para filtrar usuarios por nombre
+    router.get("/filter", async (req: Request, resp: Response) => {
+        
+        const id = Number(req.query.role_id)
+        const usuarios = await db.Usuario.findAll({
+            where : {
+                role_id : id
+            },
+            include : {
+                model : db.Role,
+                as : "Role",
+                attributes : ["name"],
+                required : true
+            },
+            order: [["id", "ASC"]] // Ordena por ID ascendente
+        })
+
+        resp.json({
+            msg : "",
+            usuarios : usuarios
+        })
+    })
+
     // Endpoint para obtener un usuario por su ID
     router.get("/:id", async (req : Request, resp : Response) => {
         const id = req.params.id
@@ -94,27 +117,7 @@ const UsuarioController = () => {
         resp.json({ msg: "" })
     })
 
-    // Endpoint para filtrar usuarios por nombre
-    router.get("/", async (req: Request, resp: Response) => {
-        const id = Number(req.query.role_id)
-        const usuarios = await db.Usuario.findAll({
-            where : {
-                role_id : id
-            },
-            include : {
-                model : db.Role,
-                as : "Role",
-                attributes : ["name"],
-                required : true
-            },
-            order: [["id", "ASC"]] // Ordena por ID ascendente
-        })
-
-        resp.json({
-            msg : "",
-            usuarios : usuarios
-        })
-    })
+    
 
     return [ path, router ]
 }
