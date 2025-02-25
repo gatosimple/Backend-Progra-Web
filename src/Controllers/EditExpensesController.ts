@@ -1,9 +1,10 @@
 import express, { Request, Response, Router } from "express";
 import jwt from "jsonwebtoken";
+import { where } from "sequelize";
 const db = require("../DAO/models");
 
 const EditExpensesController = () => {
-    const path: string = "/edit-expenses"
+    const path: string = "/edit-expenses";
     const router = express.Router()
 
 
@@ -19,18 +20,18 @@ const EditExpensesController = () => {
       }
         
       
-      const { user_id, date, amount, description, recurring, category_id } = req.body;
-      const user = await db.Usuario.findOne({ where: {user_id} })
+      const { id, date, amount, description, recurring, category_id } = req.body;
 
       await db.Expenses.update({
-        user_id: user.id,
         date: date,
         amount: amount,
         description: description,
         recurring: recurring,
         category_id: category_id
-    
-        });
+        },
+        
+        {where: {id}}
+    );
 
         res.json({
             msg: ""
