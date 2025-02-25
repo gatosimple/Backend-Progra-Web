@@ -28,14 +28,18 @@ const AccessLogsController = () => {
             return;
         }
 
-        const nuevoAccessLog = req.body;
+        const existingLog = await db.Access_logs.findOne({
+            where: { user_id: decodedToken.id }
+        });
+
+        const nuevoAccessLog= req.body;
 
         const accessLogCreado = await db.access_logs.create({
             id: null,
             user_id: decodedToken.id,
-            access_time: new Date().toISOString(),
+            // access_time: new Date(),
             action: nuevoAccessLog.action,
-            firstaccess: nuevoAccessLog.firstaccess
+            firstaccess: existingLog ? false : true
         });
 
         res.json({

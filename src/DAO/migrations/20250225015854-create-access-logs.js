@@ -13,7 +13,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       access_time: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       },
       action: {
         type: Sequelize.STRING
