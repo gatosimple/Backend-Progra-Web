@@ -12,6 +12,7 @@ import ExpensesController from "./Controllers/ExpensesControllers";
 import ReportsController from "./Controllers/ReportsController";
 import CategoriaController from "./Controllers/CategoriaController";
 import ResetPasswordController from "./Controllers/ResetPasswordController";
+import EditExpensesController from "./Controllers/EditExpensesController";
 import AccessLogsController from "./Controllers/AccessLogsController";
 
 dotenv.config()
@@ -36,6 +37,7 @@ const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
 const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
+const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
 const [ accessLogPath, accessLogRouter ] = AccessLogsController();
 
 
@@ -49,6 +51,8 @@ app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
 app.use(resetPasswordPath as string, resetPasswordRouter as Router);
+app.use(editExpensesPath as string, editExpensesRouter as Router)
+
 app.use(accessLogPath as string, accessLogRouter as Router);
 
 app.listen(port, () => {
