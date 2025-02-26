@@ -4,10 +4,9 @@ import { Op, Sequelize } from "sequelize";
 
 const router = express.Router();
 
-// ✅ Obtener estadísticas de usuarios
 const getUserStatistics = async (req: Request, res: Response) => {
     try {
-        const Usuario = db.usuario; // Asegurar que el modelo se está obteniendo correctamente
+        const Usuario = db.Usuario; // Asegurar que el modelo se está obteniendo correctamente
 
         const totalUsers = await Usuario.count();
 
@@ -27,10 +26,8 @@ const getUserStatistics = async (req: Request, res: Response) => {
     }
 };
 
-// 🚀 Registrar ruta en el router
 router.get("/", getUserStatistics);
 
-// ✅ Exportar correctamente como función
 export default function UserStatsController() {
     return ["/user-statistics", router];
 }

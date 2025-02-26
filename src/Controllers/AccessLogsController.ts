@@ -1,71 +1,43 @@
 import express, { Request, Response } from "express";
-const db = require("../DAO/models");
-const jwt = require("jsonwebtoken");
 import { Op } from "sequelize";
+const db = require("../DAO/models");
 
 const AccessLogsController = () => {
     const path: string = "/accesslogs";
     const router = express.Router();
 
-    // 🚀 Ruta existente: Registrar un nuevo acceso
-    router.post('/', async (req: Request, res: Response) => {
-        const authorization = req.get("authorization");
-
-        let token = '';
-        if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-            token = authorization.substring(7);
-        }
-
-        let decodedToken = {} as any;
+    router.post("/", async (req: Request, res: Response) => {
         try {
-            decodedToken = jwt.verify(token, process.env.SECRET as string);
-        } catch (e) {
-            console.log(e);
+            const { user_id, action, firstaccess } = req.body;
+
+            const accessLogCreado = await db.Access_logs.create({
+                user_id,
+                access_time: new Date(),
+                action,
+                firstaccess,
+            });
+
+            res.json({ msg: "Access log created", log: accessLogCreado });
+        } catch (error) {
+            console.error("Error creating access log:", error);
+            res.status(500).json({ message: "Internal server error" });
         }
-
-        if (!token || !decodedToken.id) {
-            res.status(401).json({ error: "token missing or invalid" });
-            return;
-        }
-
-        const nuevoAccessLog = req.body;
-
-        const accessLogCreado = await db.access_logs.create({
-            id: null,
-            user_id: decodedToken.id,
-            access_time: new Date().toISOString(),
-            action: nuevoAccessLog.action,
-            firstaccess: nuevoAccessLog.firstaccess
-        });
-
-        res.json({
-            msg: "",
-            al: accessLogCreado
-        });
     });
 
-    // ✅ NUEVA RUTA: Consultar historial de acceso
     router.get("/", async (req: Request, res: Response) => {
         try {
-            const { userId, fechaInicio, fechaFin } = req.query;
-
-            let whereCondition: any = {};
-
-            if (userId) {
-                whereCondition.user_id = userId;
-            }
-
-            if (fechaInicio && fechaFin) {
-                whereCondition.access_time = {
-                    [Op.between]: [new Date(fechaInicio as string), new Date(fechaFin as string)]
-                };
-            }
-
-            const accessLogs = await db.access_logs.findAll({
-                where: whereCondition,
+            console.log("Fetching access logs...");
+            const accessLogs = await db.Access_logs.findAll({
+                attributes: ["id", "access_time", "action"],
+                include: [{
+                    model: db.Usuario,  
+                    as: "Usuario", 
+                    attributes: ["name", "email"]
+                }],
                 order: [["access_time", "DESC"]],
             });
 
+            console.log("Fetched logs:", accessLogs);
             res.status(200).json(accessLogs);
         } catch (error) {
             console.error("Error fetching access logs:", error);
