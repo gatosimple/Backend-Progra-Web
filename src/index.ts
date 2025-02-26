@@ -15,7 +15,6 @@ import CategoriaController from "./Controllers/CategoriaController";
 import ResetPasswordController from "./Controllers/ResetPasswordController";
 import EditExpensesController from "./Controllers/EditExpensesController";
 import AccessLogsController from "./Controllers/AccessLogsController";
-import AlertaPresupuestoController from "./Controllers/AlertaPresupuestoController";
 import PerfilController from "./Controllers/PerfilController";
 
 dotenv.config()
@@ -43,7 +42,6 @@ const [ addPresupuestoPath, addPresupuestoRouter ] = AddPresupuestoController();
 const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
 const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
 const [ accessLogPath, accessLogRouter ] = AccessLogsController();
-const [ alertaPresupuestoPath, alertaPresupuestoRouter ] = AlertaPresupuestoController();
 const [ perfilPath, perfilRouter ] = PerfilController();
 
 app.use(registerPath as string, registerRouter as Router);
@@ -58,7 +56,6 @@ app.use(catPath as string, catRouter as Router);
 app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 app.use(resetPasswordPath as string, resetPasswordRouter as Router);
 app.use(editExpensesPath as string, editExpensesRouter as Router)
-app.use(alertaPresupuestoPath as string, alertaPresupuestoRouter as Router)
 app.use(perfilPath as string, perfilRouter as Router)
 app.use(accessLogPath as string, accessLogRouter as Router);
 
