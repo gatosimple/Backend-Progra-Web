@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Access_logs.belongsTo(models.Usuario, {
         foreignKey: 'user_id',
-        as: 'usuario'
+        as: 'Usuario'
       });
     }
   }
