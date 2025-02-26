@@ -6,8 +6,9 @@ import RegisterController from "./Controllers/RegisterController";
 import LoginController from "./Controllers/LoginController";
 import UsuarioController from "./Controllers/UsuarioController";
 import AddGastoController from "./Controllers/AddGastoController";
+import BudgetsController from "./Controllers/BudgetsController";
+import AddPresupuestoController from "./Controllers/AddPresupuestoController";
 import RoleController from "./Controllers/RoleController";
-import PresupuestoController from "./Controllers/PresupuestoController";
 import ExpensesController from "./Controllers/ExpensesControllers";
 import ReportsController from "./Controllers/ReportsController";
 import CategoriaController from "./Controllers/CategoriaController";
@@ -17,6 +18,7 @@ import AccessLogsController from "./Controllers/AccessLogsController";
 import AlertaPresupuestoController from "./Controllers/AlertaPresupuestoController";
 import UserStatsController from "./Controllers/UserStatsController"; 
 import ExpenseFilterController from "./Controllers/ExpenseFilterController"; 
+import PerfilController from "./Controllers/PerfilController";
 
 dotenv.config();
 
@@ -37,24 +39,27 @@ app.use(
 
 const port = process.env.PORT || 5000;
 
+
 // Registrar rutas existentes
-const [registerPath, registerRouter] = RegisterController();
-const [loginPath, loginRouter] = LoginController();
-const [userPath, userRouter] = UsuarioController();
-const [rolePath, roleRouter] = RoleController();
-const [addGastoPath, addGastoRouter] = AddGastoController();
 const [presupuestoPath, presupuestoRouter] = PresupuestoController();
+const [userStatsPath, userStatsRouter] = UserStatsController();
+const [expenseFilterPath, expenseFilterRouter] = ExpenseFilterController();
+const [ registerPath, registerRouter ] = RegisterController();
+const [ loginPath, loginRouter ] = LoginController();
+const [ userPath, userRouter ] = UsuarioController();
+const [ rolePath, roleRouter ] = RoleController();
+const [ addGastoPath, addGastoRouter ] = AddGastoController();
+const [ BudgetsPath, BudgetsRouter ] = BudgetsController();
 const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
-const [resetPasswordPath, resetPasswordRouter] = ResetPasswordController();
-const [editExpensesPath, editExpensesRouter] = EditExpensesController();
-const [accessLogPath, accessLogRouter] = AccessLogsController();
-const [alertaPresupuestoPath, alertaPresupuestoRouter] = AlertaPresupuestoController();
+const [ addPresupuestoPath, addPresupuestoRouter ] = AddPresupuestoController();
+const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
+const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
+const [ accessLogPath, accessLogRouter ] = AccessLogsController();
+const [ alertaPresupuestoPath, alertaPresupuestoRouter ] = AlertaPresupuestoController();
+const [ perfilPath, perfilRouter ] = PerfilController();
 
-// Registrar nuevas rutas
-const [userStatsPath, userStatsRouter] = UserStatsController();
-const [expenseFilterPath, expenseFilterRouter] = ExpenseFilterController();
 
 // Agregar todas las rutas al servidor
 app.use(registerPath as string, registerRouter as Router);
@@ -63,11 +68,14 @@ app.use(userPath as string, userRouter as Router);
 app.use(rolePath as string, roleRouter as Router);
 app.use(addGastoPath as string, addGastoRouter as Router);
 app.use(presupuestoPath as string, presupuestoRouter as Router);
+app.use(BudgetsPath as string, BudgetsRouter as Router);
 app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
+app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 app.use(resetPasswordPath as string, resetPasswordRouter as Router);
-app.use(editExpensesPath as string, editExpensesRouter as Router);
+app.use(editExpensesPath as string, editExpensesRouter as Router)
+app.use(perfilPath as string, perfilRouter as Router)
 app.use(accessLogPath as string, accessLogRouter as Router);
 app.use(alertaPresupuestoPath as string, alertaPresupuestoRouter as Router);
 app.use(userStatsPath as string, userStatsRouter as Router);

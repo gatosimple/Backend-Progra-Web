@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "Expenses"
       });
 
+      Usuario.hasMany(models.Budgets, {
+        foreignKey: "user_id",
+        as: "Budgets"
+      });
+      
       Usuario.hasMany(models.Access_logs, {
         foreignKey: "user_id",
         as: "Access_logs"
