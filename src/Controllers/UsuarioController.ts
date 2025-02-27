@@ -1,11 +1,36 @@
 import express, {Request, Response} from "express"
 const db = require("../DAO/models")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const UsuarioController = () => {
     const path: string = "/admin/users";
 
     const router = express.Router()
+
+    // Endpoint para obtener user_id
+    router.get('/me', async (req: Request, res: Response) => {
+        const authorization = req.get("authorization");
+        let token = '';
+        if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+            token = authorization.substring(7);
+        }
+        let decodedToken = {} as any;
+        try {
+            decodedToken = jwt.verify(token, process.env.SECRET as string);
+        } catch (e) {
+            console.log(e);
+        }
+        if (!token || !decodedToken.id) {
+            res.status(401).json({error: 'token missing or invalid'});
+            return;
+        }
+        res.json({
+            msg: "",
+            id: decodedToken.id
+        })
+    })
+
 
     // Endpoint para obtener todos los usuarios
     router.get('/', async (req: Request, resp: Response) => {
@@ -105,6 +130,7 @@ const UsuarioController = () => {
     router.put("/:id", async (req: Request, resp: Response) => {
         const id = req.params.id
         const datosActualizados = req.body
+        console.log(datosActualizados.name)
         // 
         let passwordHash: string | undefined;
         
