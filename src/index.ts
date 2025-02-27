@@ -17,6 +17,7 @@ import EditExpensesController from "./Controllers/EditExpensesController";
 import AccessLogsController from "./Controllers/AccessLogsController";
 import AlertaPresupuestoController from "./Controllers/AlertaPresupuestoController";
 import PerfilController from "./Controllers/PerfilController";
+import UserStatsController from "./Controllers/UserStatsController";
 
 dotenv.config()
 
@@ -45,6 +46,7 @@ const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
 const [ accessLogPath, accessLogRouter ] = AccessLogsController();
 const [ alertaPresupuestoPath, alertaPresupuestoRouter ] = AlertaPresupuestoController();
 const [ perfilPath, perfilRouter ] = PerfilController();
+const [ userStatsPath, userStatsRouter ] = UserStatsController();
 
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
@@ -61,6 +63,7 @@ app.use(editExpensesPath as string, editExpensesRouter as Router)
 app.use(alertaPresupuestoPath as string, alertaPresupuestoRouter as Router)
 app.use(perfilPath as string, perfilRouter as Router)
 app.use(accessLogPath as string, accessLogRouter as Router);
+app.use(userStatsPath as string, userStatsRouter as Router);
 
 app.listen(port, () => {
     console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
