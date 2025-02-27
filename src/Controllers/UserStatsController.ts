@@ -9,7 +9,6 @@ const getUserStatistics = async (req: Request, res: Response) => {
         const Usuario = db.Usuario; // Asegurar que el modelo se está obteniendo correctamente
 
         const totalUsers = await Usuario.count();
-        const totalUsers3 = await Usuario.count();
         
         // AQUI SE DEBERIA AGREGAR LA MODIFICACION PARA QUE FUNCIONE 
         const year = new Date().getFullYear();
@@ -49,13 +48,12 @@ const getUserStatistics = async (req: Request, res: Response) => {
         // AQUI SE DEBERIA AGREGAR LA MODIFICACION PARA QUE FUNCIONE 
 
         //res.status(200).json({ totalUsers, newUsersByMonth });
-        res.status(200).json({ totalUsers, valor: [1,2,3,4,5,6,7,8,9,0, 11, 12] });
+        res.status(200).json({ totalUsers, newUsersByMonth});
     } catch (error) {
         console.error("Error getting user statistics:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 };
-
 
 router.get("/", getUserStatistics);
 

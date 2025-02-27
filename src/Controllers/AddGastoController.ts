@@ -43,10 +43,16 @@ const AddGastoController = () => {
 
         const nuevoGasto = req.body;
 
+        let fecha = nuevoGasto.date;
+
+        if(!fecha) {
+            fecha = new Date().toISOString().split('T')[0];
+        }
+
         const gastoCreado = await db.Expenses.create({
             id: null,
             user_id: decodedToken.id,
-            date: nuevoGasto.date,
+            date: fecha,
             amount: nuevoGasto.amount,
             description: nuevoGasto.description,
             recurring: nuevoGasto.recurring,
