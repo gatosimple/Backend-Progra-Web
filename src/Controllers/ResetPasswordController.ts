@@ -37,18 +37,14 @@ const ResetPasswordController = () => {
 
             const token = jwt.sign(tokenIncludes, process.env.SECRET as string);
 
-            // Insertar una nueva fila en la tabla PasswordResets
-            await db.PasswordResets.update(
+            // Actualizar una fila en la tabla PasswordResets
+            await db.PasswordResets.create(
                 {
+                    usuarioId: userExists.id,
                     token: token, // El nuevo valor del token
                     created_at: new Date() // Establecer la fecha actual
-                },
-                {
-                    where: {
-                        usuarioId: userExists.id // Condición para encontrar al usuario
-                    }
                 }
-            );;
+            );
 
             
 
