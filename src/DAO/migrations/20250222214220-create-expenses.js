@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
       },  
       amount: {
         type: Sequelize.FLOAT

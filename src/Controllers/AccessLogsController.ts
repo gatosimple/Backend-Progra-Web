@@ -1,6 +1,7 @@
-import express, {Request, Response} from "express"
-const db = require("../DAO/models")
-const jwt = require("jsonwebtoken")
+import express, { Request, Response } from "express";
+import { Op } from "sequelize";
+const db = require("../DAO/models");
+import jwt from "jsonwebtoken";
 
 const AccessLogsController = () => {
     const path: string = "/accesslogs";
@@ -49,7 +50,29 @@ const AccessLogsController = () => {
         })
     });
 
-    return [ path, router ];
-}
+
+    router.get("/", async (req: Request, res: Response) => {
+        try {
+            console.log("Fetching access logs...");
+            const accessLogs = await db.Access_logs.findAll({
+                attributes: ["id", "access_time", "action"],
+                include: [{
+                    model: db.Usuario,  
+                    as: "Usuario", 
+                    attributes: ["name", "email"]
+                }],
+                order: [["access_time", "DESC"]],
+            });
+
+            console.log("Fetched logs:", accessLogs);
+            res.status(200).json(accessLogs);
+        } catch (error) {
+            console.error("Error fetching access logs:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    });
+
+    return [path, router];
+};
 
 export default AccessLogsController;
