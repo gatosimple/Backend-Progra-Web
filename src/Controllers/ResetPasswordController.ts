@@ -37,7 +37,36 @@ const ResetPasswordController = () => {
 
             const token = jwt.sign(tokenIncludes, process.env.SECRET as string);
 
-            // Actualizar una fila en la tabla PasswordResets
+            const existingReset = await db.PasswordResets.findOne({
+                where: { usuarioId: userExists.id }
+            });
+
+            if (existingReset) {
+                // Si existe, actualizar el registro
+                await db.PasswordResets.update(
+                    {
+                        token: token, // Nuevo token
+                        created_at: new Date() // Actualizar la fecha
+                    },
+                    {
+                        where: { usuarioId: userExists.id }
+                    }
+                );
+            } else {
+                // Si no existe, crear un nuevo registro
+                await db.PasswordResets.create({
+                    usuarioId: userExists.id,
+                    token: token,
+                    created_at: new Date()
+                });
+            }
+
+            res.json({
+                msg: "Contraseña actualizada correctamente"
+            });
+
+
+            // Crear una fila en la tabla PasswordResets
             await db.PasswordResets.create(
                 {
                     usuarioId: userExists.id,
