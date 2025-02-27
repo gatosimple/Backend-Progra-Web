@@ -1,4 +1,4 @@
-import express, {Express, Request, Response, Router} from "express";
+import express, { Express, Router } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -17,16 +17,25 @@ import EditExpensesController from "./Controllers/EditExpensesController";
 import AccessLogsController from "./Controllers/AccessLogsController";
 import AlertaPresupuestoController from "./Controllers/AlertaPresupuestoController";
 import PerfilController from "./Controllers/PerfilController";
+import UserStatsController from "./Controllers/UserStatsController"; 
+import ExpenseFilterController from "./Controllers/ExpenseFilterController"; 
 
-dotenv.config()
+dotenv.config();
 
-const app : Express = express()
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended : true
-}))
-app.use(express.static("assets")) // Carpeta archivos estaticos
-app.use(cors()) // TODO: Incrementar la seguridad
+const app: Express = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("assets")); // Carpeta de archivos estáticos
+
+// Configuración de CORS con seguridad mejorada
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(",") || "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 const port = process.env.PORT || 5000;
 
@@ -35,33 +44,39 @@ const [ loginPath, loginRouter ] = LoginController();
 const [ userPath, userRouter ] = UsuarioController();
 const [ rolePath, roleRouter ] = RoleController();
 const [ addGastoPath, addGastoRouter ] = AddGastoController();
-const [ BudgetsPath, BudgetsRouter ] = BudgetsController();
 const [expensesPath, expensesRouter] = ExpensesController();
 const [reportsPath, reportsRouter] = ReportsController();
 const [catPath, catRouter] = CategoriaController();
+const [ BudgetsPath, BudgetsRouter ] = BudgetsController();
 const [ addPresupuestoPath, addPresupuestoRouter ] = AddPresupuestoController();
-const [ resetPasswordPath, resetPasswordRouter ] = ResetPasswordController();
-const [ editExpensesPath, editExpensesRouter ] = EditExpensesController()
-const [ accessLogPath, accessLogRouter ] = AccessLogsController();
-const [ alertaPresupuestoPath, alertaPresupuestoRouter ] = AlertaPresupuestoController();
-const [ perfilPath, perfilRouter ] = PerfilController();
+const [resetPasswordPath, resetPasswordRouter] = ResetPasswordController();
+const [editExpensesPath, editExpensesRouter] = EditExpensesController();
+const [accessLogPath, accessLogRouter] = AccessLogsController();
+const [alertaPresupuestoPath, alertaPresupuestoRouter] = AlertaPresupuestoController();
+const [userStatsPath, userStatsRouter] = UserStatsController();
+const [expenseFilterPath, expenseFilterRouter] = ExpenseFilterController();
+const [perfilPath, perfilRouter] = PerfilController();
 
+// Agregar todas las rutas al servidor
 app.use(registerPath as string, registerRouter as Router);
 app.use(loginPath as string, loginRouter as Router);
 app.use(userPath as string, userRouter as Router);
 app.use(rolePath as string, roleRouter as Router);
 app.use(addGastoPath as string, addGastoRouter as Router);
 app.use(BudgetsPath as string, BudgetsRouter as Router);
+app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 app.use(expensesPath as string, expensesRouter as Router);
 app.use(reportsPath as string, reportsRouter as Router);
 app.use(catPath as string, catRouter as Router);
-app.use(addPresupuestoPath as string, addPresupuestoRouter as Router);
 app.use(resetPasswordPath as string, resetPasswordRouter as Router);
 app.use(editExpensesPath as string, editExpensesRouter as Router)
 app.use(alertaPresupuestoPath as string, alertaPresupuestoRouter as Router)
-app.use(perfilPath as string, perfilRouter as Router)
 app.use(accessLogPath as string, accessLogRouter as Router);
+app.use(userStatsPath as string, userStatsRouter as Router);
+app.use(expenseFilterPath as string, expenseFilterRouter as Router);
+app.use(perfilPath as string, perfilRouter as Router);
 
+// Iniciar el servidor
 app.listen(port, () => {
-    console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
-})
+  console.log(`[Server]: Servidor ejecutándose en el puerto ${port}`);
+});
