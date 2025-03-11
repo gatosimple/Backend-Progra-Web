@@ -22,12 +22,13 @@ import UserStatsController from "./Controllers/UserStatsController";
 dotenv.config()
 
 const app : Express = express()
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended : true
 }))
 app.use(express.static("assets")) // Carpeta archivos estaticos
-app.use(cors()) // TODO: Incrementar la seguridad
+
 
 const port = process.env.PORT || 5000;
 
